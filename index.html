@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sheheryar Rana — Web Developer</title>
+<meta name="description" content="Portfolio of Sheheryar Rana, Full Stack Web Developer specialising in Computer Vision, Python, React and Node.js."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+/* =====================
+   RESET
+   ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* =====================
+   CSS VARIABLES — DARK
+   ===================== */
+body.dark {
+  --bg:       #050A12;
+  --text:     #E8EEF7;
+  --muted:    rgba(232,238,247,0.55);
+  --dim:      rgba(232,238,247,0.35);
+  --accent:   #00D2FF;
+  --ac-bg:    rgba(0,210,255,0.06);
+  --ac-bdr:   rgba(0,210,255,0.2);
+  --ac-bdr2:  rgba(0,210,255,0.5);
+  --border:   rgba(0,210,255,0.1);
+  --border2:  rgba(0,210,255,0.08);
+  --gap-bg:   rgba(0,210,255,0.08);
+  --bar-bg:   rgba(0,210,255,0.1);
+  --card-bg:  rgba(0,210,255,0.04);
+  --logo-grad: linear-gradient(135deg,#00D2FF,#0066aa);
+  --logo-col:  #050A12;
+  --logo-glow: 0 0 14px rgba(0,210,255,0.35);
+}
+
+/* =====================
+   CSS VARIABLES — LIGHT
+   ===================== */
+body.light {
+  --bg:       #F4F7FF;
+  --text:     #0A0E1A;
+  --muted:    rgba(10,14,26,0.55);
+  --dim:      rgba(10,14,26,0.4);
+  --accent:   #0066CC;
+  --ac-bg:    rgba(0,102,204,0.06);
+  --ac-bdr:   rgba(0,102,204,0.2);
+  --ac-bdr2:  rgba(0,102,204,0.5);
+  --border:   rgba(0,102,204,0.12);
+  --border2:  rgba(0,102,204,0.1);
+  --gap-bg:   rgba(0,102,204,0.1);
+  --bar-bg:   rgba(0,102,204,0.1);
+  --card-bg:  #ffffff;
+  --logo-grad: linear-gradient(135deg,#0066CC,#003d7a);
+  --logo-col:  #ffffff;
+  --logo-glow: 0 4px 14px rgba(0,102,204,0.28);
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+
+/* =====================
+   BACKGROUND CANVAS
+   ===================== */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page { position: relative; z-index: 2; }
+
+/* =====================
+   NAVBAR
+   ===================== */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  border-bottom: 0.5px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 100;
+  transition: background 0.4s;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ====== UNIQUE CENTERED SR LOGO ====== */
+.sr-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sr-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 2px;
+  background: var(--logo-grad);
+  color: var(--logo-col);
+  box-shadow: var(--logo-glow);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--ac-bdr2);
+}
+
+/* Geometric diamond pattern inside logo */
+.sr-mark::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 60%; height: 60%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 1px solid var(--ac-bdr2);
+  opacity: 0.4;
+  border-radius: 2px;
+}
+
+.sr-mark::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 35%; height: 35%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ac-bdr2);
+  opacity: 0.2;
+  border-radius: 2px;
+}
+
+/* Animated orbit rings around logo */
+.sr-orbit {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 62px; height: 62px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.sr-orbit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid transparent;
+  border-top-color: var(--accent);
+  border-right-color: var(--accent);
+  border-radius: 50%;
+  animation: orbitSpin 3s linear infinite;
+  opacity: 0.5;
+}
+
+.sr-orbit::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--accent);
+  border-left-color: var(--accent);
+  border-radius: 50%;
+  animation: orbitSpin 4s linear infinite reverse;
+  opacity: 0.3;
+}
+
+@keyframes orbitSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Logo hover effects */
+.sr-logo:hover .sr-mark {
+  transform: scale(1.12);
+  box-shadow: 0 0 30px rgba(0,210,255,0.5);
+}
+
+.sr-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color 0.4s;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ====== CUSTOM BUTTONS ====== */
+
+/* Glassmorphism toggle button */
+.toggle-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 0.5px solid var(--ac-bdr2);
+  background: var(--ac-bg);
+  color: var(--accent);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+.toggle-btn:hover::before { left: 100%; }
+
+.toggle-btn:hover { 
+  background: var(--accent); 
+  color: var(--bg); 
+  box-shadow: 0 0 16px rgba(0,210,255,0.3);
+}
+
+/* =====================
+   HERO
+   ===================== */
+.hero {
+  padding: 72px 48px 48px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 56px;
+  align-items: center;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.8); }
+}
+
+.badge-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-name {
+  font-size: 60px;
+  font-weight: 800;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 10px;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+
+.hero-bio {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 500px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+/* ====== CUSTOM CTA BUTTONS ====== */
+
+/* Neon WhatsApp button */
+.wa-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 13px 26px;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+}
+
+.wa-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+.wa-btn:hover::before { left: 100%; }
+
+.wa-btn:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+}
+
+/* Secondary CTA button */
+.cta-secondary {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--ac-bdr2);
+  color: var(--muted);
+  padding: 13px 26px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--ac-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,210,255,0.15);
+}
+
+.stats-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 0.5px solid var(--border);
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+
+.stat-num {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -1px;
+}
+
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 4px;
+}
+
+/* =====================
+   SKILL CARD
+   ===================== */
+.skill-card {
+  background: var(--card-bg);
+  border: 0.5px solid var(--ac-bdr);
+  padding: 26px;
+  animation: fadeUp 0.8s 0.2s ease both;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+.term-header {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.td { width: 6px; height: 6px; border-radius: 50%; }
+
+.s-tag {
+  display: inline-block;
+  margin: 3px 3px 0 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 5px 9px;
+  border: 0.5px solid var(--ac-bdr);
+  color: var(--muted);
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.s-tag:hover {
+  border-color: var(--ac-bdr2);
+  color: var(--accent);
+  background: var(--ac-bg);
+  transform: translateY(-1px);
+}
+
+.s-tag.hot {
+  border-color: var(--ac-bdr2);
+  color: var(--accent);
+  background: var(--ac-bg);
+}
+
+.skill-bars {
+  border-top: 0.5px solid var(--border);
+  padding-top: 16px;
+  margin-top: 14px;
+}
+
+.bar-wrap { margin-bottom: 10px; }
+
+.bar-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.bar-bg  { height: 2px; background: var(--bar-bg); border-radius: 1px; }
+.bar-fill { height: 100%; background: var(--accent); border-radius: 1px; transition: width 1.5s ease; }
+
+/* =====================
+   ABOUT STRIP
+   ===================== */
+.about-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gap-bg);
+  border-top: 0.5px solid var(--border2);
+}
+
+.a-panel {
+  background: var(--bg);
+  padding: 28px 22px;
+  transition: all 0.3s;
+  cursor: default;
+}
+.a-panel:hover { 
+  background: var(--ac-bg); 
+  transform: translateY(-2px);
+}
+
+.a-icon  { font-size: 22px; color: var(--accent); margin-bottom: 12px; }
+.a-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.a-desc  {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+/* =====================
+   SECTIONS
+   ===================== */
+.section {
+  padding: 44px 48px;
+  border-top: 0.5px solid var(--border2);
+}
+
+.sec-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--ac-bdr);
+}
+
+/* =====================
+   TIMELINE
+   ===================== */
+.timeline { display: flex; }
+
+.t-item {
+  flex: 1;
+  padding-right: 18px;
+  position: relative;
+}
+.t-item::after {
+  content: '';
+  position: absolute;
+  top: 5px; left: 84px; right: 0;
+  height: 0.5px;
+  background: var(--ac-bdr);
+}
+.t-item:last-child::after { display: none; }
+
+.t-dot {
+  width: 11px; height: 11px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+  margin-bottom: 10px;
+  transition: all 0.4s;
+}
+.t-item:hover .t-dot {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(0,210,255,0.4);
+}
+
+.t-year   { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+.t-role   { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.t-company { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+
+/* =====================
+   PROJECTS
+   ===================== */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gap-bg);
+}
+
+.proj-card {
+  background: var(--bg);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.proj-card:hover { 
+  background: var(--ac-bg); 
+  transform: translateY(-3px);
+}
+
+.proj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 0;
+  background: var(--accent);
+  transition: height 0.3s;
+}
+.proj-card:hover::before { height: 100%; }
+
+.proj-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.proj-name { font-size: 15px; font-weight: 700; }
+
+/* =====================
+   SOCIAL LINKS SECTION
+   ===================== */
+.social-section {
+  padding: 44px 48px;
+  border-top: 0.5px solid var(--border2);
+  text-align: center;
+}
+
+.social-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  background: var(--card-bg);
+  border: 0.5px solid var(--ac-bdr);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s;
+  min-width: 220px;
+}
+
+.social-card:hover {
+  background: var(--ac-bg);
+  border-color: var(--ac-bdr2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,210,255,0.1);
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.social-icon.fb { background: #1877F2; color: #fff; }
+.social-icon.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+.social-icon.wa { background: #25D366; color: #fff; }
+.social-icon.em { background: var(--logo-grad); color: var(--logo-col); }
+
+.social-info {
+  text-align: left;
+}
+
+.social-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.social-handle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* =====================
+   CONTACT BAR
+   ===================== */
+.contact-bar {
+  padding: 26px 48px;
+  border-top: 0.5px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: var(--ac-bg);
+}
+
+.c-text  { font-size: 13px; color: var(--muted); }
+.c-email { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--accent); text-decoration: none; }
+.c-email:hover { text-decoration: underline; }
+
+.c-wa {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #25D366;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.c-wa:hover { text-decoration: underline; }
+
+/* =====================
+   FOOTER
+   ===================== */
+footer {
+  padding: 20px 48px;
+  border-top: 0.5px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--dim);
+}
+
+.footer-links { display: flex; gap: 20px; }
+.footer-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-links a:hover::after { width: 100%; }
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .sr-logo { position: static; transform: none; margin: 0 auto; }
+  .hero { grid-template-columns: 1fr; padding: 36px 20px 28px; gap: 30px; }
+  .hero-name { font-size: 40px; }
+  .skill-card { display: none; }
+  .about-strip { grid-template-columns: 1fr; }
+  .section { padding: 30px 20px; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .social-grid { flex-direction: column; align-items: center; }
+  .social-card { width: 100%; max-width: 300px; }
+  .contact-bar { flex-direction: column; align-items: flex-start; padding: 20px; }
+  footer { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
+  .timeline { flex-direction: column; gap: 22px; }
+  .t-item::after { display: none; }
+}
+</style>
+</head>
+<body class="dark" id="body">
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="page">
+
+  <!-- NAV — Logo Centered, Hire Me Removed -->
+  <nav>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#timeline">Timeline</a>
+    </div>
+
+    <!-- CENTERED UNIQUE LOGO -->
+    <a class="sr-logo" href="#">
+      <div class="sr-orbit"></div>
+      <div class="sr-mark" id="srMark">SR</div>
+      <div class="sr-text">Sheheryar.dev</div>
+    </a>
+
+    <div class="nav-right">
+      <div class="nav-links" style="margin-right:20px;">
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleMode()">
+        &#9728; Light Mode
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div>
+      <div class="badge-row">
+        <div class="badge-dot"></div>
+        <div class="badge-text">Available for Projects &middot; 1 Years Experience</div>
+      </div>
+      <h1 class="hero-name">Sheheryar<br>Rana</h1>
+      <div class="hero-role">Web Developer</div>
+      <p class="hero-bio">Building modern, intelligent web applications from front to back. Passionate about clean code, computer vision, and turning ideas into powerful digital products.</p>
+
+      <div class="cta-row">
+        <a href="https://wa.me/923281186722" target="_blank" class="wa-btn">&#9742; WhatsApp Me</a>
+        <a href="#projects" class="cta-secondary">View Projects &rarr;</a>
+      </div>
+
+      <div class="stats-row">
+        <div><div class="stat-num">1+</div><div class="stat-label">Years Active</div></div>
+        <div><div class="stat-num">6+</div><div class="stat-label">Projects Done</div></div>
+        <div><div class="stat-num">3+</div><div class="stat-label">Clients Served</div></div>
+      </div>
+    </div>
+
+    <!-- Skill Card -->
+    <div class="skill-card" id="skills">
+      <div class="term-header">
+        <div class="td" style="background:#FF5F57"></div>
+        <div class="td" style="background:#FFBD2E"></div>
+        <div class="td" style="background:#28C840"></div>
+        skill.matrix
+      </div>
+      <div>
+        <span class="s-tag hot">Computer Vision</span>
+        <span class="s-tag hot">HTML</span>
+        <span class="s-tag hot">CSS</span>
+        <span class="s-tag hot">Web Designer</span>
+        <span class="s-tag">Research</span>
+        <span class="s-tag">Wordpress</span>
+        <span class="s-tag">UI/UX</span>
+        <span class="s-tag">Project Management</span>
+        <span class="s-tag">Leadership Skills</span>
+        <span class="s-tag">Vibe Coder</span>
+        <span class="s-tag">Problem Solving</span>
+        <span class="s-tag">Xammp</span>
+      </div>
+      <div class="skill-bars">
+        <div class="bar-wrap">
+          <div class="bar-label-row"><span>Computer Vision</span><span>90%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label-row"><span>Web Developer</span><span>92%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label-row"><span>Web Designer</span><span>88%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label-row"><span>Research</span><span>85%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PANELS -->
+  <div class="about-strip">
+    <div class="a-panel">
+      <div class="a-icon">&#129504;</div>
+      <div class="a-title">Research</div>
+      <div class="a-desc">Deep exploration of computer vision, NLP &amp; intelligent systems</div>
+    </div>
+    <div class="a-panel">
+      <div class="a-icon">&#128101;</div>
+      <div class="a-title">Team Leadership</div>
+      <div class="a-desc">Collaborating &amp; leading dev teams to ship quality products</div>
+    </div>
+    <div class="a-panel">
+      <div class="a-icon">&#127881;</div>
+      <div class="a-title">Consulting</div>
+      <div class="a-desc">Advising clients on web architecture &amp; AI integration</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section" id="timeline">
+    <div class="sec-label">Career Timeline &middot; 2024 &rarr; 2026</div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2024</div>
+        <div class="t-role">Portfolio</div>
+        <div class="t-company">Portfolio Website</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2025</div>
+        <div class="t-role">Web Development</div>
+        <div class="t-company">Web Projects</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2026</div>
+        <div class="t-role">Web Development</div>
+        <div class="t-company">Mobile &amp; Desktop</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" id="projects">
+    <div class="sec-label">Featured Projects</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-tag"> Portfolio &middot; 2024</div>
+        <div class="proj-name"> Portfolio Website</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-tag">Web Development &middot; 2025</div>
+        <div class="proj-name">Web Development</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-tag">Web Designer &middot; 2026</div>
+        <div class="proj-name">Web Designer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL LINKS SECTION -->
+  <div class="social-section" id="social">
+    <div class="sec-label">Connect With Me</div>
+    <div class="social-grid">
+      <a href="https://facebook.com/Muhammad.Sheheryar.Rana" target="_blank" class="social-card">
+        <div class="social-icon fb">f</div>
+        <div class="social-info">
+          <div class="social-name">Facebook</div>
+          <div class="social-handle">Muhammad Sheheryar Rana</div>
+        </div>
+      </a>
+      <a href="https://instagram.com/Sheheryar" target="_blank" class="social-card">
+        <div class="social-icon ig">&#9733;</div>
+        <div class="social-info">
+          <div class="social-name">Instagram</div>
+          <div class="social-handle">@Sheheryar</div>
+        </div>
+      </a>
+      <a href="https://wa.me/923281186722" target="_blank" class="social-card">
+        <div class="social-icon wa">&#9742;</div>
+        <div class="social-info">
+          <div class="social-name">WhatsApp</div>
+          <div class="social-handle">+92 328 118 6722</div>
+        </div>
+      </a>
+      <a href="mailto:sheheryarrana9660@gmail.com" class="social-card">
+        <div class="social-icon em">@</div>
+        <div class="social-info">
+          <div class="social-name">Email</div>
+          <div class="social-handle">sheheryarrana9660@gmail.com</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-bar" id="contact">
+    <div class="c-text">Open to full-time, freelance &amp; consulting roles</div>
+    <a href="mailto:sheheryarrana9660@gmail.com" class="c-email">sheheryarrana9660@gmail.com</a>
+    <a href="https://wa.me/923281186722" target="_blank" class="c-wa">&#9742; +92 328 118 6722</a>
+    <a href="https://wa.me/923281186722" target="_blank" class="cta-secondary">Let&rsquo;s Talk &rarr;</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">&copy; 2026 Sheheryar Rana &mdash; All Rights Reserved</div>
+    <div class="footer-links">
+      <a href="mailto:sheheryarrana9660@gmail.com">Email</a>
+      <a href="https://wa.me/923281186722" target="_blank">WhatsApp</a>
+      <a href="https://facebook.com/Muhammad.Sheheryar.Rana" target="_blank">Facebook</a>
+      <a href="https://instagram.com/Sheheryar" target="_blank">Instagram</a>
+      <a href="#about">Back to Top &uarr;</a>
+    </div>
+  </footer>
+
+</div><!-- end .page -->
+
+<!-- =====================
+     JAVASCRIPT
+     ===================== -->
+<script>
+/* ---- DARK / LIGHT TOGGLE ---- */
+var isDark = true;
+
+function toggleMode() {
+  isDark = !isDark;
+  document.getElementById('body').className = isDark ? 'dark' : 'light';
+  document.getElementById('toggleBtn').innerHTML = isDark ? '&#9728; Light Mode' : '&#9790; Dark Mode';
+  setTimeout(drawBg, 50);
+}
+
+/* ---- ANIMATED BACKGROUND ---- */
+function drawBg() {
+  var canvas = document.getElementById('bgCanvas');
+  var W = window.innerWidth;
+  var H = document.body.scrollHeight;
+  canvas.width  = W;
+  canvas.height = H;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+
+  var ctx = canvas.getContext('2d');
+  var bg  = isDark ? '#050A12'         : '#F4F7FF';
+  var ac  = isDark ? 'rgba(0,210,255,' : 'rgba(0,102,204,';
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  /* Grid lines */
+  ctx.lineWidth = 0.5;
+  for (var x = 0; x < W; x += 40) {
+    ctx.strokeStyle = ac + '0.04)';
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (var y = 0; y < H; y += 40) {
+    ctx.strokeStyle = ac + '0.04)';
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  /* Hexagons */
+  function hex(cx, cy, r, a) {
+    ctx.beginPath();
+    for (var i = 0; i < 6; i++) {
+      var ang = Math.PI / 180 * (60 * i - 30);
+      var px  = cx + r * Math.cos(ang);
+      var py  = cy + r * Math.sin(ang);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = ac + a + ')';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+  [[W*0.82,120,60,0.09],[W*0.90,210,34,0.07],[W*0.72,70,24,0.05],
+   [70,355,50,0.06],[24,425,27,0.04],[W*0.87,H*0.55,65,0.07],
+   [90,H*0.70,40,0.05],[W*0.50,185,17,0.04],[195,H*0.50,28,0.04],
+   [W*0.65,H*0.80,37,0.05]].forEach(function(h){hex(h[0],h[1],h[2],h[3]);});
+
+  /* Neural nodes + connections */
+  var nodes = [];
+  for (var i = 0; i < 26; i++) {
+    nodes.push({x:Math.random()*W, y:Math.random()*H,
+                r:Math.random()*3+2, a:Math.random()*0.12+0.03});
+  }
+  nodes.forEach(function(n) {
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.strokeStyle = ac+n.a+')'; ctx.lineWidth=0.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r*0.3,0,Math.PI*2);
+    ctx.fillStyle = ac+(n.a*0.5)+')'; ctx.fill();
+  });
+  for (var i = 0; i < nodes.length; i++) {
+    for (var j = i+1; j < nodes.length; j++) {
+      var dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y;
+      var d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < 200) {
+        ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y);
+        ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.strokeStyle = ac+(0.06*(1-d/200))+')';
+        ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    }
+  }
+
+  /* Circuit traces */
+  function circuit(sx, sy, steps) {
+    ctx.strokeStyle = ac+'0.04)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(sx, sy);
+    var cx = sx, cy = sy;
+    for (var i = 0; i < steps; i++) {
+      var dir = Math.floor(Math.random()*4);
+      var len = (Math.floor(Math.random()*3)+1) * 40;
+      if (dir===0) cx+=len; else if (dir===1) cx-=len;
+      else if (dir===2) cy+=len; else cy-=len;
+      cx = Math.max(0, Math.min(W, cx));
+      cy = Math.max(0, Math.min(H, cy));
+      ctx.lineTo(cx, cy);
+    }
+    ctx.stroke();
+  }
+  for (var i = 0; i < 16; i++) circuit(Math.random()*W, Math.random()*H, Math.floor(Math.random()*5+3));
+
+  /* Corner decorations */
+  function corner(x, y, s, flip) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(flip ? -1 : 1, 1);
+    ctx.strokeStyle = ac+'0.15)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(s,0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,s); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0,0,s*0.4,0,Math.PI/2); ctx.stroke();
+    ctx.restore();
+  }
+  corner(36, 100, 28, false); corner(W-36, 100, 28, true);
+  corner(36, H-60, 28, false); corner(W-36, H-60, 28, true);
+
+  /* Rotated squares */
+  for (var i = 0; i < 7; i++) {
+    var tx=Math.random()*W, ty=Math.random()*H, ts=Math.random()*18+10;
+    ctx.save(); ctx.translate(tx,ty); ctx.rotate(Math.PI/4);
+    ctx.strokeStyle = ac+'0.04)'; ctx.lineWidth = 0.5;
+    ctx.strokeRect(-ts/2,-ts/2,ts,ts); ctx.restore();
+  }
+}
+
+drawBg();
+window.addEventListener('resize', drawBg);
+</script>
+
+</body>
+</html>
